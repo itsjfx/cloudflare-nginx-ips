@@ -12,4 +12,7 @@ if ($cloudflare_ip != 1) {
 this will return a 403 to any visitor not from cloudflare, ideally you should add a ufw or firewall rule to do this instead to not expose nginx, however a benefit of this is you can selectively choose which hosts are cloudflare only and which arent
 
 ## job
-run monthly in a crontab @monthly /bin/bash /etc/nginx/cloudflare-ips.sh
+run monthly in a crontab
+```
+@monthly /bin/bash /etc/nginx/cloudflare-ips.sh
+```

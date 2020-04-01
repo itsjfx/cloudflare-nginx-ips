@@ -23,7 +23,7 @@ for type in v4 v6; do
 		echo "	$ip 1;" >> $CLOUDFLARE_WHITELIST_PATH;
 		if [ $UFW_RULES = true ] ; then
 			ufw allow from $ip to any port www comment "cloudflare"
-        	ufw allow from $ip to any port https comment "cloudflare"
+			ufw allow from $ip to any port https comment "cloudflare"
 		fi
 	done
 done

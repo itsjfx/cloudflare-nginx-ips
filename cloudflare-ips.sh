@@ -3,6 +3,8 @@
 CLOUDFLARE_REAL_IPS_PATH=/etc/nginx/conf.d/cloudflare_real_ips.conf
 CLOUDFLARE_WHITELIST_PATH=/etc/nginx/conf.d/cloudflare_whitelist.conf
 
+UFW_RULES=false
+
 set -e
 
 for file in $CLOUDFLARE_REAL_IPS_PATH $CLOUDFLARE_WHITELIST_PATH; do
@@ -19,6 +21,10 @@ for type in v4 v6; do
 	for ip in `curl https://www.cloudflare.com/ips-$type`; do
 		echo "set_real_ip_from $ip;" >> $CLOUDFLARE_REAL_IPS_PATH;
 		echo "	$ip 1;" >> $CLOUDFLARE_WHITELIST_PATH;
+		if [ $UFW_RULES = true ] ; then
+			ufw allow from $ip to any port www comment "cloudflare"
+        	ufw allow from $ip to any port https comment "cloudflare"
+		fi
 	done
 done
 
